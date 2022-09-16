@@ -1,0 +1,26 @@
+.show {
+  box-sizing: border-box;
+  justify-content: space-between;
+}
+
+/* .image {
+  width: 50%;
+}
+
+.content {
+  width: 50%;
+} */
+
+/* @media screen and (max-width: 768px) {
+  .show {
+    display: block;
+  }
+
+  .image {
+    width: 100%;
+  }
+
+  .content {
+    width: 100%;
+  }
+} */

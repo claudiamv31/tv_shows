@@ -1,8 +1,10 @@
 import TopShow from './TopShow';
 
+import classes from './TrendingShows.module.css';
+
 const TrendingShows = props => {
   return (
-    <li>
+    <li className={classes['top-show']}>
       <TopShow
         key={props.id}
         id={props.id}

@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import Header from './components/Layout/Header/Header';
 import TrendingShows from './components/TrendingShows/TrendingShows';
-import { API_KEY, API_URL } from './config';
+import { API_KEY, API_URL, NUM_SHOWS_TRENDING } from './config';
+import classes from './App.module.css';
 
 function App() {
   const [topShows, setTopShows] = useState([]);
@@ -39,20 +40,22 @@ function App() {
     });
   }, []);
 
-  const showsList = topShows.map(show => (
-    <TrendingShows
-      key={show.key}
-      id={show.id}
-      name={show.name}
-      image={show.image}
-      score={show.score}
-    />
-  ));
+  const showsList = topShows
+    .filter(show => show.key < NUM_SHOWS_TRENDING)
+    .map(show => (
+      <TrendingShows
+        key={show.key}
+        id={show.id}
+        name={show.name}
+        image={show.image}
+        score={show.score}
+      />
+    ));
 
   return (
     <div className="App">
       <Header />
-      <ul>{showsList}</ul>
+      <ul className={classes['show-content']}>{showsList}</ul>
     </div>
   );
 }
