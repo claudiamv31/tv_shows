@@ -1,11 +1,11 @@
-import { Fragment } from 'react';
+import { Link } from 'react-router-dom';
 
 import { IMAGE_URL_RES } from '../../config';
 import classes from './TopShowTrending.module.css';
 
 const SingleShowTrending = props => {
   return (
-    <Fragment>
+    <Link to={`/shows/${props.id}`}>
       <div className={`${classes.show} ${classes.image}`}>
         <a href={props.id}>
           <img src={IMAGE_URL_RES + props.image} alt={props.name} />
@@ -18,7 +18,7 @@ const SingleShowTrending = props => {
           {props.score}
         </p>
       </div>
-    </Fragment>
+    </Link>
   );
 };
 

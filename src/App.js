@@ -11,8 +11,8 @@ function App() {
       <Header />
       <main>
         <Routes>
-          <Route path="/" element={<Navigate replace to="/trending-shows" />} />
-          <Route path="/trending-shows" element={<TrendingShows />} />
+          <Route path="/" element={<Navigate replace to="/shows/trending" />} />
+          <Route path="/shows/trending" element={<TrendingShows />} />
           <Route path="/shows" element={<ListShows />} />
           <Route path="/shows/:showId" element={<ShowDetail />} />
         </Routes>
