@@ -1,9 +1,9 @@
 import { Fragment } from 'react';
 
 import { IMAGE_URL_RES } from '../../config';
-import classes from './TopShow.module.css';
+import classes from './TopShowTrending.module.css';
 
-const TopShow = props => {
+const SingleShowTrending = props => {
   return (
     <Fragment>
       <div className={`${classes.show} ${classes.image}`}>
@@ -22,4 +22,4 @@ const TopShow = props => {
   );
 };
 
-export default TopShow;
+export default SingleShowTrending;

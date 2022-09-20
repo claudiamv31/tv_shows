@@ -1,11 +1,11 @@
-import TopShow from './TopShow';
+import SingleShowTrending from './SingleShowTrending';
 
-import classes from './TrendingShows.module.css';
+import classes from './ListShowsTrending.module.css';
 
-const TrendingShows = props => {
+const ListShowsTrending = props => {
   return (
     <li className={classes['top-show']}>
-      <TopShow
+      <SingleShowTrending
         key={props.id}
         id={props.id}
         image={props.image}
@@ -16,4 +16,4 @@ const TrendingShows = props => {
   );
 };
 
-export default TrendingShows;
+export default ListShowsTrending;
