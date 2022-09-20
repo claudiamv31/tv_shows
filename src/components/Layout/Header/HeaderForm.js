@@ -1,10 +1,13 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+
 import { API_KEY, API_URL } from '../../../config';
 
 import classes from './HeaderForm.module.css';
 
 const HeaderForm = () => {
   const [enteredShow, setEnteredShow] = useState('');
+  const navigate = useNavigate();
 
   const showChangeHandler = event => {
     setEnteredShow(event.target.value);
@@ -26,6 +29,18 @@ const HeaderForm = () => {
     const responseData = await response.json();
 
     console.log(responseData);
+
+    navigate('/shows', {
+      state: responseData.results.map(show => {
+        return {
+          id: show.id,
+          name: show.name,
+          language: show.original_language,
+          score: show.vote_average,
+          image: show.poster_path != null ? show.poster_path : '',
+        };
+      }),
+    });
   };
 
   return (
