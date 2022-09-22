@@ -28,8 +28,6 @@ const HeaderForm = () => {
 
     const responseData = await response.json();
 
-    console.log(responseData);
-
     navigate('/shows', {
       state: responseData.results.map(show => {
         return {

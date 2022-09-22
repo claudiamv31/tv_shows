@@ -13,3 +13,56 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
   z-index: 10;
 }
+
+.icon {
+  position: relative;
+  padding: 0;
+  margin: 0;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 300;
+  font-size: 40px;
+  color: white;
+  -webkit-transition: all 0.4s ease 0s;
+  -o-transition: all 0.4s ease 0s;
+  transition: all 0.4s ease 0s;
+
+  font-size: 26px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  width: 160px;
+  text-align: center;
+  margin: auto;
+  white-space: nowrap;
+  padding-bottom: 13px;
+}
+
+.icon span {
+  display: block;
+  font-size: 0.5em;
+  line-height: 1.3;
+}
+.icon em {
+  font-style: normal;
+  font-weight: 600;
+}
+
+.icon:before {
+  background-color: #a6bc09;
+  content: '';
+  display: block;
+  height: 3px;
+  width: 75px;
+  margin-bottom: 5px;
+}
+.icon:after {
+  background-color: #a6bc09;
+  content: '';
+  display: block;
+  position: absolute;
+  right: 0;
+  bottom: 0;
+  height: 3px;
+  width: 75px;
+  margin-bottom: 0.25em;
+}
