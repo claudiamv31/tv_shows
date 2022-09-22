@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import LoadingSpinner from '../components/UI/LoadingSpinner';
 
 import ListShowsTrending from '../components/TrendingShows/ListShowsTrending';
 import { API_KEY, API_URL, NUM_SHOWS_TRENDING } from '../config';
@@ -6,6 +7,8 @@ import classes from './TrendingShows.module.css';
 
 const TrendingShows = () => {
   const [topShows, setTopShows] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [httpError, setHttpError] = useState(null);
 
   useEffect(() => {
     const fetchTrendingShows = async () => {
@@ -32,12 +35,27 @@ const TrendingShows = () => {
       }
 
       setTopShows(topShows);
+      setIsLoading(false);
     };
 
     fetchTrendingShows().catch(error => {
       console.log(error);
+      setIsLoading(false);
+      setHttpError(error.message);
     });
   }, []);
+
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (httpError) {
+    return (
+      <section className={classes.error}>
+        <p>{httpError}</p>
+      </section>
+    );
+  }
 
   const showsList = topShows
     .filter(show => show.key < NUM_SHOWS_TRENDING)

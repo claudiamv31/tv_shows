@@ -2,10 +2,14 @@ import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
 import { API_KEY, API_URL, IMAGE_URL_SHOW } from '../config';
+import LoadingSpinner from '../components/UI/LoadingSpinner';
+import classes from './ShowDetail.module.css';
 
 const ShowDetail = () => {
   const params = useParams();
   const [data, setData] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const [httpError, setHttpError] = useState(null);
 
   const { showId } = params;
 
@@ -24,13 +28,27 @@ const ShowDetail = () => {
     };
     const fetchData = async () => {
       const results = await fetchShowDetail();
-      console.log(results);
       setData(results);
+      setIsLoading(false);
     };
-    fetchData();
+    fetchData().catch(error => {
+      console.log(error);
+      setIsLoading(false);
+      setHttpError(error);
+    });
   }, [showId]);
 
-  //   console.log(data);
+  if (isLoading) {
+    return <LoadingSpinner />;
+  }
+
+  if (httpError) {
+    return (
+      <section>
+        <p>{httpError}</p>
+      </section>
+    );
+  }
 
   const show = {
     id: data.id,
@@ -56,7 +74,7 @@ const ShowDetail = () => {
   //   console.log(show);
 
   return (
-    <div>
+    <div className={classes.container}>
       <div>
         <img src={IMAGE_URL_SHOW + show.image} alt={show.name} />
       </div>

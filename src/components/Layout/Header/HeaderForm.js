@@ -49,7 +49,8 @@ const HeaderForm = () => {
         onChange={showChangeHandler}
       />
       <button className={classes.button} type="submit">
-        Search
+        <i className="fa fa-search"></i>
+        <p>Search</p>
       </button>
     </form>
   );
