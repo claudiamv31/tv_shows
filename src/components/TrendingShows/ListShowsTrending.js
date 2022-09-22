@@ -6,7 +6,7 @@ const ListShowsTrending = props => {
   return (
     <li className={classes['top-show']}>
       <SingleShowTrending
-        key={props.id}
+        number={props.number}
         id={props.id}
         image={props.image}
         score={props.score}

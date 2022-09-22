@@ -41,9 +41,10 @@ const TrendingShows = () => {
 
   const showsList = topShows
     .filter(show => show.key < NUM_SHOWS_TRENDING)
-    .map(show => (
+    .map((show, index) => (
       <ListShowsTrending
         key={show.key}
+        number={index}
         id={show.id}
         name={show.name}
         image={show.image}
@@ -51,7 +52,12 @@ const TrendingShows = () => {
       />
     ));
 
-  return <ul className={classes['show-content']}>{showsList}</ul>;
+  return (
+    <div className={classes.trending}>
+      <h1>Trending Tv Shows</h1>
+      <ul>{showsList}</ul>
+    </div>
+  );
 };
 
 export default TrendingShows;

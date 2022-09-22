@@ -1,0 +1,70 @@
+.tv {
+  display: table;
+  width: 100%;
+  justify-content: space-between;
+}
+
+.tv div {
+  display: table-cell;
+  height: 100%;
+  vertical-align: middle;
+  text-align: center;
+}
+
+a:link {
+  text-decoration: none;
+}
+
+.top {
+  width: 3%;
+  font-family: 'Times New Roman', Times, serif;
+  font-weight: 900;
+  font-size: 2rem;
+  color: black;
+}
+
+.image {
+  width: 33%;
+}
+
+.name {
+  width: 45%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 900;
+  font-size: 1.2rem;
+  color: black;
+}
+
+.score {
+  width: 14%;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: black;
+  font-style: italic;
+}
+
+.tv h3 {
+}
+/* .image {
+  width: 50%;
+  display: inline-flex;
+}
+
+.content {
+  width: 50%;
+} */
+
+/* @media screen and (max-width: 768px) {
+  .show {
+    display: block;
+  }
+
+  .image {
+    width: 100%;
+  }
+
+  .content {
+    width: 100%;
+  }
+} */

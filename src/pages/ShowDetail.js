@@ -41,10 +41,16 @@ const ShowDetail = () => {
     summary: data.overview,
     premiered: data.first_air_date,
     ended: data.last_air_date,
-    runtime:
-      data.episode_run_time?.length > 2
-        ? data.episode_run_time[0] + ' - ' + data.episode_run_time[1]
-        : data.episode_run_time + ' ',
+    runtime() {
+      if (data.episode_run_time?.length === 0) {
+        return '';
+      }
+      if (data.episode_run_time?.length > 1) {
+        return data.episode_run_time[0] + ' - ' + data.episode_run_time[1];
+      } else {
+        return data.episode_run_time + ' ';
+      }
+    },
   };
 
   //   console.log(show);
@@ -63,13 +69,17 @@ const ShowDetail = () => {
           </h3>
           <span class="show__summary-data">{show.summary}</span>
         </div>
-        <div class="show__runtime-content">
-          <span class="show__runtime-title">Duration: </span>
-          <span>
-            {show.runtime}
-            minutes
-          </span>
-        </div>
+        {show.runtime() !== '' ? (
+          <div class="show__runtime-content">
+            <span class="show__runtime-title">Duration: </span>
+            <span>
+              {show.runtime()}
+              minutes
+            </span>
+          </div>
+        ) : (
+          ''
+        )}
         <div class="show__seasons-content">
           <span class="show__seasons-title">Seasons: </span>
           <span>{show.seasons}</span>
