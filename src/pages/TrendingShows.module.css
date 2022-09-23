@@ -14,26 +14,33 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-/* .show-content {
-  width: 80%;
-  margin: 0 auto;
-  padding: 1rem;
-  background: #f0e68c;
-}*/
+.error {
+  text-align: center;
+}
 @media screen and (min-width: 1312px) {
   .trending ul {
     width: 60%;
   }
 }
 
-@media screen and (max-width: 992px) {
+@media screen and (min-width: 992px) {
   .trending ul {
     width: 80%;
   }
 }
 
-@media screen and (max-width: 688px) {
+@media screen and (max-width: 992px) {
   .trending ul {
     width: 85%;
+  }
+}
+
+@media screen and (max-width: 688px) {
+  .trending ul {
+    width: 90%;
+  }
+
+  .trending h1 {
+    font-size: 1.5rem;
   }
 }

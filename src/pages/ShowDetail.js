@@ -34,7 +34,7 @@ const ShowDetail = () => {
     fetchData().catch(error => {
       console.log(error);
       setIsLoading(false);
-      setHttpError(error);
+      setHttpError(error.message);
     });
   }, [showId]);
 
@@ -44,7 +44,7 @@ const ShowDetail = () => {
 
   if (httpError) {
     return (
-      <section>
+      <section className={classes.error}>
         <p>{httpError}</p>
       </section>
     );

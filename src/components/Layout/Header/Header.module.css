@@ -88,9 +88,8 @@
   }
 }
 
-@media screen and (max-width: 420px) {
+@media screen and (max-width: 465px) {
   .header {
-    position: fixed;
     padding: 0 5%;
     top: 0;
     left: 0;
