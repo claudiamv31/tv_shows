@@ -29,6 +29,7 @@ const ShowDetail = () => {
     const fetchData = async () => {
       const results = await fetchShowDetail();
       setData(results);
+      console.log(results);
       setIsLoading(false);
     };
     fetchData().catch(error => {
@@ -54,11 +55,18 @@ const ShowDetail = () => {
     id: data.id,
     name: data.name,
     image: data?.poster_path,
+    imageBig: data?.backdrop_path,
     seasons: data.number_of_seasons,
     score: data.vote_average,
     summary: data.overview,
     premiered: data.first_air_date,
-    ended: data.last_air_date,
+    ended() {
+      if (data.status === 'Ended') {
+        return data.last_air_date;
+      } else {
+        return '';
+      }
+    },
     runtime() {
       if (data.episode_run_time?.length === 0) {
         return '';
@@ -71,25 +79,23 @@ const ShowDetail = () => {
     },
   };
 
-  //   console.log(show);
-
   return (
     <div className={classes.container}>
-      <div>
+      <div className={classes.img}>
         <img src={IMAGE_URL_SHOW + show.image} alt={show.name} />
       </div>
-      <div>
+      <div className={classes['show-info']}>
         <h1>{show.name}</h1>
-        <div class="show__summary">
-          <h3 class="premiered-ended">
+        <div className={classes['show-summary-info']}>
+          <h2>
             {show.premiered?.substring(0, 4)} -{' '}
-            {show.ended !== undefined ? show.ended?.substring(0, 4) : ''}
-          </h3>
-          <span class="show__summary-data">{show.summary}</span>
+            {show.ended() !== '' ? show.ended().substring(0, 4) : ''}
+          </h2>
+          <span className={classes.summary}>{show.summary}</span>
         </div>
         {show.runtime() !== '' ? (
-          <div class="show__runtime-content">
-            <span class="show__runtime-title">Duration: </span>
+          <div>
+            <span>Duration: </span>
             <span>
               {show.runtime()}
               minutes
@@ -98,8 +104,8 @@ const ShowDetail = () => {
         ) : (
           ''
         )}
-        <div class="show__seasons-content">
-          <span class="show__seasons-title">Seasons: </span>
+        <div>
+          <span>Seasons: </span>
           <span>{show.seasons}</span>
         </div>
         {/* <div class="show__genre-content">
