@@ -29,7 +29,6 @@ const ShowDetail = () => {
     const fetchData = async () => {
       const results = await fetchShowDetail();
       setData(results);
-      console.log(results);
       setIsLoading(false);
     };
     fetchData().catch(error => {

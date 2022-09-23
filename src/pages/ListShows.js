@@ -1,12 +1,12 @@
 import { useLocation } from 'react-router-dom';
 import SingleShow from '../components/results/SingleShow';
+import classes from './ListShows.module.css';
 
 const ListShows = () => {
   const location = useLocation();
-  console.log(location);
 
   return (
-    <ul>
+    <ul className={classes.list}>
       {location.state.map(show => (
         <SingleShow
           key={show.id}
@@ -15,7 +15,6 @@ const ListShows = () => {
           image={show.image}
         />
       ))}
-      ;
     </ul>
   );
 };

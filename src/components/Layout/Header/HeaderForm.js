@@ -16,8 +16,6 @@ const HeaderForm = () => {
   const searchShowHandler = async event => {
     event.preventDefault();
 
-    console.log(enteredShow);
-
     const response = await fetch(
       `${API_URL}search/tv?api_key=${API_KEY}&query=${enteredShow}`
     );
