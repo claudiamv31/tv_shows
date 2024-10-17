@@ -2,7 +2,12 @@ import { useEffect, useState } from 'react';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 
 import ListShowsTrending from '../components/TrendingShows/ListShowsTrending';
-import { API_KEY, API_URL, NUM_SHOWS_TRENDING } from '../config';
+import {
+  API_KEY,
+  API_URL,
+  NUM_SHOWS_TRENDING,
+  API_SERVICE_URL,
+} from '../config';
 import classes from './TrendingShows.module.css';
 
 const TrendingShows = () => {
@@ -12,25 +17,32 @@ const TrendingShows = () => {
 
   useEffect(() => {
     const fetchTrendingShows = async () => {
-      const response = await fetch(
-        `${API_URL}trending/tv/week?api_key=${API_KEY}`
-      );
+      let response = await fetch(`${API_SERVICE_URL}`);
+      let responseData = await response.json();
+
+      console.log(responseData);
+
+      if (!response.ok || !responseData || responseData.length === 0) {
+        response = await fetch(`${API_URL}trending/tv/week?api_key=${API_KEY}`);
+        responseData = await response.json();
+        responseData = responseData.results;
+        console.log('entra');
+      }
 
       if (!response.ok) {
         throw new Error('Something went wrong');
       }
 
-      const reponseData = await response.json();
-
+      console.log(responseData[0]);
       const topShows = [];
 
-      for (const key in reponseData.results) {
+      for (const key in responseData) {
         topShows.push({
           key: key,
-          id: reponseData.results[key].id,
-          name: reponseData.results[key].name,
-          image: reponseData.results[key].backdrop_path,
-          score: reponseData.results[key].vote_average,
+          id: responseData[key].id,
+          name: responseData[key].name,
+          image: responseData[key].backdrop_path,
+          score: responseData[key].vote_average,
         });
       }
 

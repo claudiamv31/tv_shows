@@ -5,3 +5,4 @@ export const IMAGE_URL_SHOW = 'https://image.tmdb.org/t/p/w300';
 export const API_URL = 'https://api.themoviedb.org/3/';
 export const API_KEY = '8b4627b6be830584aec4d97730d6c02a';
 export const NUM_SHOWS_TRENDING = 10;
+export const API_SERVICE_URL = 'http://localhost:5031/api/Trending';
