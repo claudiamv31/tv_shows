@@ -25,15 +25,18 @@ const TrendingShows = () => {
       if (!response.ok || !responseData || responseData.length === 0) {
         response = await fetch(`${API_URL}trending/tv/week?api_key=${API_KEY}`);
         responseData = await response.json();
-        responseData = responseData.results;
-        console.log('entra');
+
+        if (!response.ok) {
+          throw new Error('Something went wrong');
+        }
+
+        if (responseData && responseData.results) {
+          responseData = responseData.results;
+        } else {
+          throw new Error('No trending data available');
+        }
       }
 
-      if (!response.ok) {
-        throw new Error('Something went wrong');
-      }
-
-      console.log(responseData[0]);
       const topShows = [];
 
       for (const key in responseData) {
@@ -41,7 +44,8 @@ const TrendingShows = () => {
           key: key,
           id: responseData[key].id,
           name: responseData[key].name,
-          image: responseData[key].backdrop_path,
+          overview: responseData[key].overview,
+          image: responseData[key].poster_path,
           score: responseData[key].vote_average,
         });
       }
@@ -77,6 +81,7 @@ const TrendingShows = () => {
         number={index}
         id={show.id}
         name={show.name}
+        overview={show.overview}
         image={show.image}
         score={show.score}
       />
