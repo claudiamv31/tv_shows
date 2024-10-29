@@ -1,6 +1,5 @@
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
-
 import ListShowsTrending from '../components/TrendingShows/ListShowsTrending';
 import {
   API_KEY,
@@ -17,49 +16,52 @@ const TrendingShows = () => {
 
   useEffect(() => {
     const fetchTrendingShows = async () => {
-      let response = await fetch(`${API_SERVICE_URL}`);
-      let responseData = await response.json();
+      try {
+        let response = await fetch(`${API_SERVICE_URL}`);
+        if (!response.ok) throw new Error('Primary API is unavailable');
 
-      console.log(responseData);
+        let responseData = await response.json();
+        if (!responseData || responseData.length === 0)
+          throw new Error('Primary API returned empty data');
 
-      if (!response.ok || !responseData || responseData.length === 0) {
-        response = await fetch(`${API_URL}trending/tv/week?api_key=${API_KEY}`);
-        responseData = await response.json();
+        setTopShows(formatShowsData(responseData));
+      } catch (error) {
+        console.error('Primary API failed:', error.message);
+        try {
+          const fallbackResponse = await fetch(
+            `${API_URL}trending/tv/week?api_key=${API_KEY}`
+          );
+          if (!fallbackResponse.ok)
+            throw new Error('Fallback API is unavailable');
 
-        if (!response.ok) {
-          throw new Error('Something went wrong');
+          let fallbackData = await fallbackResponse.json();
+          if (fallbackData && fallbackData.results) {
+            setTopShows(formatShowsData(fallbackData.results));
+          } else {
+            throw new Error('Fallback API returned empty data');
+          }
+        } catch (fallbackError) {
+          console.error('Fallback API failed:', fallbackError.message);
+          setHttpError(fallbackError.message);
         }
-
-        if (responseData && responseData.results) {
-          responseData = responseData.results;
-        } else {
-          throw new Error('No trending data available');
-        }
+      } finally {
+        setIsLoading(false);
       }
-
-      const topShows = [];
-
-      for (const key in responseData) {
-        topShows.push({
-          key: key,
-          id: responseData[key].id,
-          name: responseData[key].name,
-          overview: responseData[key].overview,
-          image: responseData[key].poster_path,
-          score: responseData[key].vote_average,
-        });
-      }
-
-      setTopShows(topShows);
-      setIsLoading(false);
     };
 
-    fetchTrendingShows().catch(error => {
-      console.log(error);
-      setIsLoading(false);
-      setHttpError(error.message);
-    });
+    fetchTrendingShows();
   }, []);
+
+  const formatShowsData = data => {
+    return data.map((show, index) => ({
+      id: show.id,
+      name: show.name,
+      overview: show.overview,
+      image: show.poster_path,
+      score: show.vote_average,
+      number: index,
+    }));
+  };
 
   if (isLoading) {
     return <LoadingSpinner />;
@@ -74,18 +76,8 @@ const TrendingShows = () => {
   }
 
   const showsList = topShows
-    .filter(show => show.key < NUM_SHOWS_TRENDING)
-    .map((show, index) => (
-      <ListShowsTrending
-        key={show.key}
-        number={index}
-        id={show.id}
-        name={show.name}
-        overview={show.overview}
-        image={show.image}
-        score={show.score}
-      />
-    ));
+    .slice(0, NUM_SHOWS_TRENDING)
+    .map(show => <ListShowsTrending key={show.id} show={show} />);
 
   return (
     <div className={classes.trending}>
