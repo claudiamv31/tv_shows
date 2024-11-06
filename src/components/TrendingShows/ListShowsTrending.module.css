@@ -1,15 +1,6 @@
 .top-show {
   margin: 0;
-  display: flex;
   justify-content: space-between;
-  background-color: white;
   margin-bottom: 0.2rem;
-}
-
-.top-show:last-child {
-  margin-bottom: 0rem;
-}
-
-.top-show:hover {
-  background-color: #ececec;
+  background-color: white;
 }

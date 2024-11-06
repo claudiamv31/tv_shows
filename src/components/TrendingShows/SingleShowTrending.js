@@ -21,20 +21,24 @@ const SingleShowTrending = ({ show }) => {
       className={classes.tv}
       aria-label={`View details for ${tvshow.name}`}
     >
-      <div className={classes.image}>
-        <img src={imageUrl} alt={`${tvshow.name} Poster`} />
-      </div>
-      <div className={classes.content}>
-        {rank && <div className={classes.top}>{rank}</div>}
-        <div className={classes.name}>
-          <h3>{tvshow.name}</h3>
+      <div className={classes.container}>
+        <div className={classes.image}>
+          <img src={imageUrl} alt={`${tvshow.name} Poster`} />
         </div>
-        <div className={classes.score}>
-          <i className="fa fa-star" aria-hidden="true"></i>
-          <p>{tvshow.score}</p>
+        <div className={classes.details}>
+          {rank && <div className={classes.top}>{rank}</div>}
+          <div className={classes.name}>
+            <h3>{tvshow.name}</h3>
+          </div>
+          <div className={classes.score}>
+            <i className="fa fa-star" aria-hidden="true"></i>
+            <p>{tvshow.score}</p>
+          </div>
+          <div className={classes.overview}>
+            <p>{tvshow.overview}</p>
+          </div>
         </div>
       </div>
-      <div>{tvshow.overview}</div>
     </Link>
   );
 };
