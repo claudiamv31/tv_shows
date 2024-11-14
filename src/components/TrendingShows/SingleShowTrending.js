@@ -3,6 +3,14 @@ import { IMAGE_URL_RES } from '../../config';
 import classes from './SingleShowTrending.module.css';
 
 const SingleShowTrending = ({ show }) => {
+  function truncate(str, n) {
+    return str.length > n ? str.slice(0, n - 1) + '...' : str;
+  }
+
+  function financial(x) {
+    return Number.parseFloat(x).toFixed(1);
+  }
+
   if (!show) {
     return null; // or return a placeholder/loading component
   }
@@ -32,10 +40,10 @@ const SingleShowTrending = ({ show }) => {
           </div>
           <div className={classes.score}>
             <i className="fa fa-star" aria-hidden="true"></i>
-            <p>{tvshow.score}</p>
+            <p>{financial(tvshow.score)}</p>
           </div>
           <div className={classes.overview}>
-            <p>{tvshow.overview}</p>
+            <p>{truncate(tvshow.overview, 200)}</p>
           </div>
         </div>
       </div>

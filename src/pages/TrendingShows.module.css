@@ -8,10 +8,11 @@
 
 .trending ul {
   margin: 0 auto;
-  background: #ececec;
-  -webkit-box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
   list-style: none;
+}
+
+.trending li {
+  border: 1px solid #ececec;
 }
 
 .error {
