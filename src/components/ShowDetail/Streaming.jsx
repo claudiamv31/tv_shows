@@ -1,0 +1,71 @@
+import { useEffect, useState } from 'react';
+
+import { API_KEY, API_URL, IMAGE_URL_RES } from '../../config';
+
+const Streaming = ({ id }) => {
+  const [data, setData] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [httpError, setHttpError] = useState(null);
+
+  useEffect(() => {
+    const fetchShowDetail = async () => {
+      try {
+        const response = await fetch(
+          `${API_URL}tv/${id}/watch/providers?api_key=${API_KEY}`
+        );
+
+        if (!response.ok) {
+          throw new Error(
+            'Something went wrong while fetching the streaming providers.'
+          );
+        }
+
+        const responseData = await response.json();
+        setData(responseData);
+        setIsLoading(false);
+      } catch (error) {
+        console.error(error);
+        setIsLoading(false);
+        setHttpError(error.message);
+      }
+    };
+
+    fetchShowDetail();
+  }, [id]);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
+  if (httpError) {
+    return <p>{httpError}</p>;
+  }
+
+  if (!data?.results?.US?.flatrate || data.results.US.flatrate.length === 0) {
+    return <p>No streaming providers available.</p>;
+  }
+
+  const topStreams = data.results.US.flatrate
+    .filter(provider => provider.priority <= 20)
+    .sort((a, b) => b.priority - a.priority)
+    .slice(0, 3)
+    .map(provider => (
+      <li key={provider.provider_id}>
+        <a href="/">
+          <img
+            src={`${IMAGE_URL_RES}${provider.logo_path}`}
+            alt={provider.provider_name}
+          />
+        </a>
+      </li>
+    ));
+
+  return (
+    <div>
+      <h2>Streaming</h2>
+      <ul>{topStreams}</ul>
+    </div>
+  );
+};
+
+export default Streaming;

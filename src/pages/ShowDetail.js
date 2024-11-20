@@ -4,6 +4,8 @@ import { useParams } from 'react-router-dom';
 import { API_KEY, API_URL, IMAGE_URL_SHOW } from '../config';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import classes from './ShowDetail.module.css';
+import Genre from '../components/ShowDetail/Genre';
+import Streaming from '../components/ShowDetail/Streaming';
 
 const ShowDetail = () => {
   const params = useParams();
@@ -59,6 +61,7 @@ const ShowDetail = () => {
     score: data.vote_average,
     summary: data.overview,
     premiered: data.first_air_date,
+    genres: data.genres,
     ended() {
       if (data.status === 'Ended') {
         return data.last_air_date;
@@ -90,6 +93,7 @@ const ShowDetail = () => {
             {show.premiered?.substring(0, 4)} -{' '}
             {show.ended() !== '' ? show.ended().substring(0, 4) : ''}
           </h2>
+          <Streaming id={show.id} />
           <span className={classes.summary}>{show.summary}</span>
         </div>
         {show.runtime() !== '' ? (
@@ -107,12 +111,7 @@ const ShowDetail = () => {
           <span>Seasons: </span>
           <span>{show.seasons}</span>
         </div>
-        {/* <div class="show__genre-content">
-          <span class="show__grenre-title">Genre: </span>
-          <ul class="show__genre-list">
-            {this._data.genres.map(this._generateMarkupGenre).join('')}
-          </ul>
-        </div> */}
+        <Genre genres={show.genres} />
       </div>
     </div>
   );
