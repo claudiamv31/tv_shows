@@ -6,6 +6,7 @@ import LoadingSpinner from '../components/UI/LoadingSpinner';
 import classes from './ShowDetail.module.css';
 import Genre from '../components/ShowDetail/Genre';
 import Streaming from '../components/ShowDetail/Streaming';
+import YoutubeEmbed from '../components/ShowDetail/YoutubeEmbed';
 
 const ShowDetail = () => {
   const params = useParams();
@@ -83,36 +84,31 @@ const ShowDetail = () => {
 
   return (
     <div className={classes.container}>
-      <div className={classes.img}>
-        <img src={IMAGE_URL_SHOW + show.image} alt={show.name} />
-      </div>
       <div className={classes['show-info']}>
         <h1>{show.name}</h1>
-        <div className={classes['show-summary-info']}>
-          <h2>
-            {show.premiered?.substring(0, 4)} -{' '}
-            {show.ended() !== '' ? show.ended().substring(0, 4) : ''}
-          </h2>
-          <Streaming id={show.id} />
-          <span className={classes.summary}>{show.summary}</span>
+        <div className={classes['show-info-card']}>
+          <span>Seasons: {show.seasons}</span>
+          <span>
+            • {show.premiered?.substring(0, 4)} -{' '}
+            {show.ended()?.substring(0, 4) || ''}
+          </span>
+          {show.runtime() && <span> • {show.runtime()} minutes</span>}
         </div>
-        {show.runtime() !== '' ? (
-          <div>
-            <span>Duration: </span>
-            <span>
-              {show.runtime()}
-              minutes
-            </span>
-          </div>
-        ) : (
-          ''
-        )}
-        <div>
-          <span>Seasons: </span>
-          <span>{show.seasons}</span>
-        </div>
-        <Genre genres={show.genres} />
       </div>
+      <div className={classes.score}>
+        <h2>{show.score}</h2>
+      </div>
+      <div className={classes.media}>
+        <div className={classes.img}>
+          <img src={IMAGE_URL_SHOW + show.image} alt={show.name} />
+        </div>
+        <YoutubeEmbed id={show.id} />
+      </div>
+      <div>
+        <span className={classes.summary}>{show.summary}</span>
+      </div>
+      <Genre genres={show.genres} />
+      <Streaming id={show.id} />
     </div>
   );
 };

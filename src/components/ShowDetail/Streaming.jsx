@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 
 import { API_KEY, API_URL, IMAGE_URL_RES } from '../../config';
+import classes from './Streaming.module.css';
 
 const Streaming = ({ id }) => {
   const [data, setData] = useState(null);
@@ -46,8 +47,8 @@ const Streaming = ({ id }) => {
   }
 
   const topStreams = data.results.US.flatrate
-    .filter(provider => provider.priority <= 20)
-    .sort((a, b) => b.priority - a.priority)
+    .filter(provider => provider.display_priority <= 20)
+    .sort((a, b) => b.display_priority - a.display_priority)
     .slice(0, 3)
     .map(provider => (
       <li key={provider.provider_id}>
@@ -61,7 +62,7 @@ const Streaming = ({ id }) => {
     ));
 
   return (
-    <div>
+    <div className={classes.streaming}>
       <h2>Streaming</h2>
       <ul>{topStreams}</ul>
     </div>
