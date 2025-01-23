@@ -60,7 +60,7 @@
 }
 
 .score i {
-  color: #ffa500;
+  color: var(--star-yellow);
   margin-right: 0.3rem;
 }
 

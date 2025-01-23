@@ -1,0 +1,27 @@
+.genre {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.genre p {
+  color: var(--dark-green);
+  font-weight: 600;
+  margin-right: 1rem;
+}
+
+.genre ul {
+  list-style: none;
+  display: flex;
+  padding: 0;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.genre li {
+  display: inline;
+}
+
+.dot {
+  margin: 0 0.25rem;
+  color: black;
+}

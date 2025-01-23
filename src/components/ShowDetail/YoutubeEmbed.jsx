@@ -1,6 +1,7 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { API_KEY, API_URL } from '../../config';
+import classes from './YoutubeEmbeded.module.css';
 
 const YoutubeEmbed = ({ id }) => {
   const [data, setData] = useState(null);
@@ -53,15 +54,13 @@ const YoutubeEmbed = ({ id }) => {
   }
 
   return (
-    <div className="video-responsive">
+    <div className={classes.video}>
       <iframe
-        width="853"
-        height="480"
         src={`https://www.youtube.com/embed/${firstTrailer}`}
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen
-        title="Embedded youtube"
+        title="Video of Tv Show"
       />
     </div>
   );

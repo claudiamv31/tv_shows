@@ -95,20 +95,33 @@ const ShowDetail = () => {
           {show.runtime() && <span> • {show.runtime()} minutes</span>}
         </div>
       </div>
+
+      {/* Score */}
       <div className={classes.score}>
+        <i className="fa fa-star" aria-hidden="true"></i>
         <h2>{show.score}</h2>
       </div>
+
+      {/* Media (Image and Video) */}
       <div className={classes.media}>
         <div className={classes.img}>
           <img src={IMAGE_URL_SHOW + show.image} alt={show.name} />
         </div>
-        <YoutubeEmbed id={show.id} />
+        <div className={classes['video-wrapper']}>
+          <YoutubeEmbed id={show.id} />
+        </div>
       </div>
-      <div>
-        <span className={classes.summary}>{show.summary}</span>
+
+      <div className={classes.summary}>
+        <span>{show.summary}</span>
       </div>
+
       <Genre genres={show.genres} />
-      <Streaming id={show.id} />
+
+      {/* Streaming container */}
+      <div className={classes['streaming-container']}>
+        <Streaming id={show.id} />
+      </div>
     </div>
   );
 };
