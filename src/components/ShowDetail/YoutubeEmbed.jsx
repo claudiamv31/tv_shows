@@ -47,8 +47,6 @@ const YoutubeEmbed = ({ id }) => {
 
   const firstTrailer = trailers.length > 0 ? trailers[0].key : null;
 
-  console.log(firstTrailer);
-
   if (!firstTrailer) {
     return <p>No trailer available.</p>;
   }

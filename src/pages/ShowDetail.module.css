@@ -7,6 +7,7 @@
   padding: 1rem;
   flex-wrap: wrap;
   position: relative;
+  flex-direction: column;
 }
 
 .show-info {
@@ -26,6 +27,7 @@
   text-align: justify;
   font-size: 1rem;
   margin-bottom: 1rem;
+  margin: 1rem 0 1rem 0;
 }
 
 .summary span {
@@ -33,7 +35,6 @@
   letter-spacing: 0.03125em;
 }
 
-/* Score styling */
 .score {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: 800;
@@ -41,14 +42,16 @@
   color: #333;
   display: flex;
   align-items: center;
-  position: absolute; /* Position score in the top-right corner */
+  position: absolute;
   top: 1rem;
   right: 1rem;
-  z-index: 10; /* Ensure the score stays above other content */
+  z-index: 10;
+  padding-top: 1rem;
 }
 
 .score i {
   margin-right: 0.5rem;
+  color: var(--star-yellow);
 }
 
 .media {

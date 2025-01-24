@@ -1,0 +1,22 @@
+.streaming h2 {
+  font-weight: 600;
+  color: var(--dark-green);
+  color: var(--dark-green);
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-right: 1rem;
+  padding-bottom: 0.5rem;
+}
+
+.streaming ul {
+  list-style: none;
+  display: flex;
+}
+
+.streaming li {
+  padding-right: 0.5rem;
+}
+
+.streaming img {
+  width: 7rem;
+}

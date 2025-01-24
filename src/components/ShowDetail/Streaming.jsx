@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { API_KEY, API_URL, IMAGE_URL_RES } from '../../config';
+import { API_KEY, API_URL, IMAGE_URL_RES, PROVIDERS_URL } from '../../config';
 import classes from './Streaming.module.css';
 
 const Streaming = ({ id }) => {
@@ -46,20 +46,39 @@ const Streaming = ({ id }) => {
     return <p>No streaming providers available.</p>;
   }
 
+  console.log(PROVIDERS_URL.provider_name);
+
   const topStreams = data.results.US.flatrate
-    .filter(provider => provider.display_priority <= 20)
+    .filter(provider => provider.display_priority <= 10)
     .sort((a, b) => b.display_priority - a.display_priority)
     .slice(0, 3)
-    .map(provider => (
-      <li key={provider.provider_id}>
-        <a href="/">
-          <img
-            src={`${IMAGE_URL_RES}${provider.logo_path}`}
-            alt={provider.provider_name}
-          />
-        </a>
-      </li>
-    ));
+    .map(provider => {
+      const providerUrl = PROVIDERS_URL[provider.provider_name];
+
+      return (
+        <li key={provider.provider_id}>
+          {providerUrl ? (
+            <a
+              href={`https://${providerUrl}`}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <img
+                src={`${IMAGE_URL_RES}${provider.logo_path}`}
+                alt={provider.provider_name}
+              />
+            </a>
+          ) : (
+            <span>
+              <img
+                src={`${IMAGE_URL_RES}${provider.logo_path}`}
+                alt={provider.provider_name}
+              />
+            </span>
+          )}
+        </li>
+      );
+    });
 
   return (
     <div className={classes.streaming}>
