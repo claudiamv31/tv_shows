@@ -16,7 +16,7 @@ const TrendingShows = () => {
 
   useEffect(() => {
     const fetchTrendingShows = async () => {
-      try {
+      /* try {
         let response = await fetch(`${API_SERVICE_URL}`);
         if (!response.ok) throw new Error('Primary API is unavailable');
 
@@ -26,28 +26,28 @@ const TrendingShows = () => {
 
         setTopShows(formatShowsData(responseData));
       } catch (error) {
-        console.error('Primary API failed:', error.message);
-        try {
-          const fallbackResponse = await fetch(
-            `${API_URL}trending/tv/week?api_key=${API_KEY}`
-          );
-          if (!fallbackResponse.ok)
-            throw new Error('Fallback API is unavailable');
+        console.error('Primary API failed:', error.message);*/
+      try {
+        const fallbackResponse = await fetch(
+          `${API_URL}trending/tv/week?api_key=${API_KEY}`
+        );
+        if (!fallbackResponse.ok)
+          throw new Error('Fallback API is unavailable');
 
-          let fallbackData = await fallbackResponse.json();
-          if (fallbackData && fallbackData.results) {
-            setTopShows(formatShowsData(fallbackData.results));
-          } else {
-            throw new Error('Fallback API returned empty data');
-          }
-        } catch (fallbackError) {
-          console.error('Fallback API failed:', fallbackError.message);
-          setHttpError(fallbackError.message);
+        let fallbackData = await fallbackResponse.json();
+        if (fallbackData && fallbackData.results) {
+          setTopShows(formatShowsData(fallbackData.results));
+        } else {
+          throw new Error('Fallback API returned empty data');
         }
-      } finally {
-        setIsLoading(false);
+      } catch (fallbackError) {
+        console.error('Fallback API failed:', fallbackError.message);
+        setHttpError(fallbackError.message);
       }
+      // } finally {
+      setIsLoading(false);
     };
+    //};
 
     fetchTrendingShows();
   }, []);

@@ -46,8 +46,6 @@ const Streaming = ({ id }) => {
     return <p>No streaming providers available.</p>;
   }
 
-  console.log(PROVIDERS_URL.provider_name);
-
   const topStreams = data.results.US.flatrate
     .filter(provider => provider.display_priority <= 10)
     .sort((a, b) => b.display_priority - a.display_priority)
