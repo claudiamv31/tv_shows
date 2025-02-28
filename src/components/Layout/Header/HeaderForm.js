@@ -7,12 +7,7 @@ import classes from './HeaderForm.module.css';
 
 const HeaderForm = () => {
   const [enteredShow, setEnteredShow] = useState('');
-  const [isLoading, setIsLoading] = useState(true);
-  const [httpError, setHttpError] = useState(false);
-  const [error, setError] = useState('');
   const navigate = useNavigate();
-
-  let search = {};
 
   const showChangeHandler = event => {
     setEnteredShow(event.target.value);
@@ -23,7 +18,9 @@ const HeaderForm = () => {
 
     try {
       const response = await fetch(
-        `${API_URL}search/tv?api_key=${API_KEY}&query=${enteredShow}`
+        `${API_URL}search/tv?api_key=${API_KEY}&query=${encodeURIComponent(
+          enteredShow
+        )}&include_adult=false&language=en-US&page=1`
       );
 
       if (!response.ok) {
@@ -32,40 +29,35 @@ const HeaderForm = () => {
 
       const responseData = await response.json();
 
-      search = responseData;
-      setIsLoading(false);
-    } catch (error) {
-      console.log(error);
-      setIsLoading(false);
-      setHttpError(true);
-      setError(error.message);
-    }
-    console.log(search, httpError, isLoading);
+      if (!responseData.results || responseData.results.length === 0) {
+        throw new Error('No results found');
+      }
 
-    if (isLoading) {
-      navigate('/shows', {
-        state: { isLoading: isLoading },
-      });
-    }
+      const showDetails = await Promise.all(
+        responseData.results.map(async show => {
+          const creditsResponse = await fetch(
+            `${API_URL}tv/${show.id}/credits?api_key=${API_KEY}`
+          );
+          const creditsData = await creditsResponse.json();
 
-    if (httpError) {
-      navigate('/shows', {
-        state: { httpError: httpError, error: error },
-      });
-    }
-
-    if (!isLoading && !httpError) {
-      navigate('/shows', {
-        state: search.results.map(show => {
           return {
             id: show.id,
             name: show.name,
-            language: show.original_language,
+            year: show.first_air_date
+              ? show.first_air_date.split('-')[0]
+              : 'N/A',
             score: show.vote_average,
-            image: show.poster_path != null ? show.poster_path : '',
+            image: show.poster_path ? show.poster_path : '',
+            actors: creditsData.cast
+              ? creditsData.cast.slice(0, 3).map(actor => actor.name)
+              : [],
           };
-        }),
-      });
+        })
+      );
+
+      navigate('/shows', { state: { results: showDetails } });
+    } catch (error) {
+      navigate('/shows', { state: { httpError: true, error: error.message } });
     }
   };
 
@@ -74,7 +66,9 @@ const HeaderForm = () => {
       <input
         className={classes.input}
         type="text"
+        value={enteredShow}
         onChange={showChangeHandler}
+        placeholder="Search for a TV show..."
       />
       <button className={classes.button} type="submit">
         <i className="fa fa-search"></i>

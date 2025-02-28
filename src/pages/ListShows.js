@@ -5,34 +5,41 @@ import classes from './ListShows.module.css';
 
 const ListShows = () => {
   const location = useLocation();
-  console.log(location);
+  const state = location.state || {};
 
-  if (location.state.isLoading) {
+  if (state.isLoading) {
     return <LoadingSpinner />;
   }
 
-  if (location.state.httpError) {
+  if (state.httpError) {
     return (
       <section className={classes.error}>
-        <p>{location.state.error}</p>
+        <p>{state.error}</p>
       </section>
     );
   }
 
-  if (!location.state.httpError && !location.state.isLoading) {
-    return (
-      <ul className={classes.list}>
-        {location.state.map(show => (
-          <SingleShow
-            key={show.id}
-            id={show.id}
-            name={show.name}
-            image={show.image}
-          />
-        ))}
+  return (
+    <div className={classes.single}>
+      <h1>Titles</h1>
+      <ul>
+        {state.results?.length > 0 ? (
+          state.results.map(show => (
+            <SingleShow
+              key={show.id}
+              id={show.id}
+              name={show.name}
+              image={show.image}
+              year={show.year}
+              actors={show.actors}
+            />
+          ))
+        ) : (
+          <p>No results found.</p>
+        )}
       </ul>
-    );
-  }
+    </div>
+  );
 };
 
 export default ListShows;

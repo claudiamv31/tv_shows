@@ -1,12 +1,7 @@
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import ListShowsTrending from '../components/TrendingShows/ListShowsTrending';
-import {
-  API_KEY,
-  API_URL,
-  NUM_SHOWS_TRENDING,
-  API_SERVICE_URL,
-} from '../config';
+import { API_KEY, API_URL, NUM_SHOWS_TRENDING } from '../config';
 import classes from './TrendingShows.module.css';
 
 const TrendingShows = () => {
