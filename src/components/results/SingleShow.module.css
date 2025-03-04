@@ -27,6 +27,10 @@
   font-size: 20px;
 }
 
+.show-search .name:hover {
+  color: var(--light-gray);
+}
+
 .show-search .details {
-  color: #333333;
+  color: var(--dark-gray);
 }
