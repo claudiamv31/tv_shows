@@ -8,7 +8,7 @@
 }
 
 .show-search .image {
-  width: 10%;
+  width: 20%;
 }
 
 .show-search img {
@@ -25,4 +25,8 @@
   width: 80%;
   padding: 1rem 0 5px 0;
   font-size: 20px;
+}
+
+.show-search .details {
+  color: #333333;
 }

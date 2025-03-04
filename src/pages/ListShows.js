@@ -21,7 +21,9 @@ const ListShows = () => {
 
   return (
     <div className={classes.single}>
-      <h1>Titles</h1>
+      <div className={classes.title}>
+        <h1>Titles</h1>
+      </div>
       <ul>
         {state.results?.length > 0 ? (
           state.results.map(show => (

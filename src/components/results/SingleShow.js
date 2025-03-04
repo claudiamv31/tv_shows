@@ -18,7 +18,7 @@ const SingleShow = props => {
               <strong>{props.name}</strong>
             </p>
             <p className={classes.details}>{props.year}</p>
-            <p>
+            <p className={classes.details}>
               {props?.actors.map((actor, index) =>
                 index === props.actors.length - 1 ? actor : `${actor}, `
               )}
