@@ -1,29 +1,35 @@
-form {
+.form {
   display: flex;
   flex-flow: row wrap;
+  background-color: white;
+  border-radius: 8px;
+  border: 2px solid transparent;
+  position: relative;
+}
+
+.form:focus-within {
+  background: linear-gradient(white, white) padding-box,
+    linear-gradient(45deg, var(--light-green), #4caf50) border-box;
+  border-radius: 8px;
+  border: 2px solid transparent;
 }
 
 .button {
   cursor: pointer;
   font: inherit;
   border: none;
-  background-color: #ccea8d;
-  color: black;
-  padding: 0.3rem 1.5rem;
+  color: var(--light-gray);
+  padding: 0.5rem 0.5rem 0.5rem 0.5rem;
   display: flex;
   justify-content: space-around;
   align-items: center;
   border-radius: 25px;
   font-weight: bold;
+  background-color: transparent;
 }
 
 .button p {
   padding-left: 0.2rem;
-}
-
-.button:hover,
-.button:active {
-  background-color: #a6bc09;
 }
 
 .bump {
@@ -50,18 +56,13 @@ form {
 
 .input {
   border: none;
-  border-bottom: 2px solid white;
-  color: white;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: large;
-  width: 10rem;
-  background-color: transparent;
-  margin-right: 0.5rem;
-}
-
-.input:focus {
-  border-color: #ccea8d;
   outline: none;
+  font-size: smaller;
+  width: 10rem;
+  margin-right: 0.5rem;
+  box-sizing: border-box;
+  padding: 0 0 0 10px;
+  margin: 8px 0;
 }
 
 @media screen and (max-width: 600px) {

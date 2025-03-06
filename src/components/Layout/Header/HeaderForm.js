@@ -56,6 +56,8 @@ const HeaderForm = () => {
       );
 
       navigate('/shows', { state: { results: showDetails } });
+
+      setEnteredShow('');
     } catch (error) {
       navigate('/shows', { state: { httpError: true, error: error.message } });
     }
@@ -72,7 +74,6 @@ const HeaderForm = () => {
       />
       <button className={classes.button} type="submit">
         <i className="fa fa-search"></i>
-        <p>Search</p>
       </button>
     </form>
   );
