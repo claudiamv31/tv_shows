@@ -1,8 +1,16 @@
+.trending .title {
+  width: 85%;
+  margin: 0 auto;
+}
+
 .trending h1 {
   color: #333333;
   font-size: 2rem;
   text-align: center;
-  margin: 1.5rem;
+  margin: 1.5rem 0 1.5rem 0;
+  border-left: 5px solid var(--light-green);
+  padding-left: 15px;
+  text-align: left;
 }
 
 .trending ul {
@@ -21,16 +29,28 @@
   .trending ul {
     width: 60%;
   }
+
+  .trending .title {
+    width: 60%;
+  }
 }
 
 @media screen and (min-width: 992px) {
   .trending ul {
     width: 80%;
   }
+
+  .trending .title {
+    width: 80%;
+  }
 }
 
 @media screen and (max-width: 992px) {
   .trending ul {
+    width: 85%;
+  }
+
+  .trending .title {
     width: 85%;
   }
 }
@@ -42,5 +62,9 @@
 
   .trending h1 {
     font-size: 1.5rem;
+  }
+
+  .trending .title {
+    width: 90%;
   }
 }

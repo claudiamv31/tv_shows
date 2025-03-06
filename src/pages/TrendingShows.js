@@ -76,7 +76,9 @@ const TrendingShows = () => {
 
   return (
     <div className={classes.trending}>
-      <h1>Trending Tv Shows</h1>
+      <div className={classes.title}>
+        <h1>Trending Tv Shows</h1>
+      </div>
       <ul>{showsList}</ul>
     </div>
   );
