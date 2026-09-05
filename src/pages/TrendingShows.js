@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import ListShowsTrending from '../components/TrendingShows/ListShowsTrending';
-import { API_KEY, API_URL, NUM_SHOWS_TRENDING } from '../config';
+import { API_HEADERS, API_URL, NUM_SHOWS_TRENDING } from '../config';
 import classes from './TrendingShows.module.css';
 
 const TrendingShows = () => {
@@ -24,7 +24,8 @@ const TrendingShows = () => {
         console.error('Primary API failed:', error.message);*/
       try {
         const fallbackResponse = await fetch(
-          `${API_URL}trending/tv/week?api_key=${API_KEY}`
+          `${API_URL}trending/tv/week`,
+          { headers: API_HEADERS }
         );
         if (!fallbackResponse.ok)
           throw new Error('Fallback API is unavailable');

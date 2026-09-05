@@ -1,6 +1,6 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
-import { API_KEY, API_URL } from '../../config';
+import { API_HEADERS, API_URL } from '../../config';
 import classes from './YoutubeEmbeded.module.css';
 
 const YoutubeEmbed = ({ id }) => {
@@ -12,7 +12,8 @@ const YoutubeEmbed = ({ id }) => {
     const fetchShowDetail = async () => {
       try {
         const response = await fetch(
-          `${API_URL}tv/${id}/videos?api_key=${API_KEY}`
+          `${API_URL}tv/${id}/videos`,
+          { headers: API_HEADERS }
         );
 
         if (!response.ok) {
@@ -47,14 +48,16 @@ const YoutubeEmbed = ({ id }) => {
 
   const firstTrailer = trailers.length > 0 ? trailers[0].key : null;
 
-  if (!firstTrailer) {
+  // TMDB data is external input. Only accept YouTube's 11-character video ID
+  // before interpolating it into an iframe URL.
+  if (!firstTrailer || !/^[A-Za-z0-9_-]{11}$/.test(firstTrailer)) {
     return <p>No trailer available.</p>;
   }
 
   return (
     <div className={classes.video}>
       <iframe
-        src={`https://www.youtube.com/embed/${firstTrailer}`}
+        src={`https://www.youtube-nocookie.com/embed/${firstTrailer}`}
         frameBorder="0"
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowFullScreen

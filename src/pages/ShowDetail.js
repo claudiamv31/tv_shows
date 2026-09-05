@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { API_KEY, API_URL, IMAGE_URL_SHOW } from '../config';
+import { API_HEADERS, API_URL, IMAGE_URL_SHOW } from '../config';
 import LoadingSpinner from '../components/UI/LoadingSpinner';
 import classes from './ShowDetail.module.css';
 import Genre from '../components/ShowDetail/Genre';
@@ -18,7 +18,9 @@ const ShowDetail = () => {
 
   useEffect(() => {
     const fetchShowDetail = async () => {
-      const response = await fetch(`${API_URL}tv/${showId}?api_key=${API_KEY}`);
+      const response = await fetch(`${API_URL}tv/${showId}`, {
+        headers: API_HEADERS,
+      });
 
       if (!response.ok) {
         throw new Error('Something went wrong');
