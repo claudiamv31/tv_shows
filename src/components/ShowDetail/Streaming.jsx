@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { API_KEY, API_URL, IMAGE_URL_RES, PROVIDERS_URL } from '../../config';
+import { API_HEADERS, API_URL, IMAGE_URL_RES, PROVIDERS_URL } from '../../config';
 import classes from './Streaming.module.css';
 
 const Streaming = ({ id }) => {
@@ -12,7 +12,8 @@ const Streaming = ({ id }) => {
     const fetchShowDetail = async () => {
       try {
         const response = await fetch(
-          `${API_URL}tv/${id}/watch/providers?api_key=${API_KEY}`
+          `${API_URL}tv/${id}/watch/providers`,
+          { headers: API_HEADERS }
         );
 
         if (!response.ok) {

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { API_KEY, API_URL } from '../../../config';
+import { API_HEADERS, API_URL } from '../../../config';
 
 import classes from './HeaderForm.module.css';
 
@@ -18,9 +18,10 @@ const HeaderForm = () => {
 
     try {
       const response = await fetch(
-        `${API_URL}search/tv?api_key=${API_KEY}&query=${encodeURIComponent(
+        `${API_URL}search/tv?query=${encodeURIComponent(
           enteredShow
-        )}&include_adult=false&language=en-US&page=1`
+        )}&include_adult=false&language=en-US&page=1`,
+        { headers: API_HEADERS }
       );
 
       if (!response.ok) {
@@ -36,7 +37,8 @@ const HeaderForm = () => {
       const showDetails = await Promise.all(
         responseData.results.map(async show => {
           const creditsResponse = await fetch(
-            `${API_URL}tv/${show.id}/credits?api_key=${API_KEY}`
+            `${API_URL}tv/${show.id}/credits`,
+            { headers: API_HEADERS }
           );
           const creditsData = await creditsResponse.json();
 
