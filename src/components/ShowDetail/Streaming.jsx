@@ -52,7 +52,9 @@ const Streaming = ({ id }) => {
     .sort((a, b) => b.display_priority - a.display_priority)
     .slice(0, 3)
     .map(provider => {
-      const providerUrl = PROVIDERS_URL[provider.provider_name];
+      const providerUrl = Object.hasOwn(PROVIDERS_URL, provider.provider_name)
+        ? PROVIDERS_URL[provider.provider_name]
+        : null;
 
       return (
         <li key={provider.provider_id}>
