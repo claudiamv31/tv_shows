@@ -1,70 +1,37 @@
-# Getting Started with Create React App
+# Clavtv
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A React app for browsing trending TV shows, searching titles, and viewing trailers and streaming providers.
 
-## Available Scripts
+## Local development
 
-In the project directory, you can run:
+Use Node.js 22.22.2 or newer (Node 22 LTS recommended).
 
-### `npm start`
+```sh
+npm ci --ignore-scripts
+cp .env.example .env.local
+# Set TMDB_API_TOKEN in .env.local, then:
+npm start
+```
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+Open http://localhost:3000. Vite serves the app and the same-origin `/api/tmdb/` proxy. Restart the server after changing the token.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+The TMDB API read-access token belongs only in the server environment. Do not use `VITE_` or `REACT_APP_` variables for credentials: frontend build variables are public. No real credentials are needed to run tests or build the frontend.
 
-### `npm test`
+## Commands
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+- `npm test`: run UI and proxy security regression tests.
+- `npm run build`: generate the frontend in `build/`.
+- `npm run preview`: inspect the static build locally; this command does not run the API function.
+- `npm run audit`: check all dependencies, including development tools.
 
-### `npm run build`
+## Deployment
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Netlify configuration is provided in `netlify.toml`, with a server function at `/api/tmdb/*` and SPA fallback in `public/_redirects`. Set `TMDB_API_TOKEN` in the Netlify environment with **Functions** scope, then deploy the branch after reviewing it. Replace any previous `REACT_APP_TMDB_API_TOKEN` setting. The frontend build does not need the token.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+A static-only host cannot run the proxy. On another host, deploy `server/tmdb.js` behind `/api/tmdb/*`, route API requests before the SPA fallback, and apply the response headers from `public/_headers`. Restrict the public API using the host's rate limiting or firewall controls to protect the TMDB quota. The proxy only supports the read-only routes the app uses, ignores caller-supplied credentials and arbitrary parameters, rejects redirects, and times out upstream requests.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Credential exposure
 
-### `npm run eject`
+A TMDB token was previously committed in `src/config.js` and remains in Git history. **Revoke or rotate that token in the TMDB account before deploying with a replacement.** Removing it from the latest code or rewriting history does not revoke copies. The new proxy prevents the replacement from being embedded in frontend assets. This repository change cannot revoke a token in an external account.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+GitHub Actions checks the lockfile for vulnerabilities, runs tests, and builds on pushes, pull requests, and weekly. Dependabot checks npm dependencies and GitHub Actions weekly.

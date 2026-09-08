@@ -43,7 +43,7 @@ const YoutubeEmbed = ({ id }) => {
 
   const trailers =
     data && data.results
-      ? data.results.filter(video => video.type === 'Trailer')
+      ? data.results.filter(video => video.type === 'Trailer' && video.site === 'YouTube')
       : [];
 
   const firstTrailer = trailers.length > 0 ? trailers[0].key : null;
