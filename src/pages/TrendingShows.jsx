@@ -11,17 +11,6 @@ const TrendingShows = () => {
 
   useEffect(() => {
     const fetchTrendingShows = async () => {
-      /* try {
-        let response = await fetch(`${API_SERVICE_URL}`);
-        if (!response.ok) throw new Error('Primary API is unavailable');
-
-        let responseData = await response.json();
-        if (!responseData || responseData.length === 0)
-          throw new Error('Primary API returned empty data');
-
-        setTopShows(formatShowsData(responseData));
-      } catch (error) {
-        console.error('Primary API failed:', error.message);*/
       try {
         const fallbackResponse = await fetch(
           `${API_URL}trending/tv/week`,
@@ -39,11 +28,10 @@ const TrendingShows = () => {
       } catch (fallbackError) {
         console.error('Fallback API failed:', fallbackError.message);
         setHttpError(fallbackError.message);
+      } finally {
+        setIsLoading(false);
       }
-      // } finally {
-      setIsLoading(false);
     };
-    //};
 
     fetchTrendingShows();
   }, []);
