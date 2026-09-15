@@ -8,9 +8,15 @@ export default defineConfig(({ mode }) => ({
     {
       name: 'local-tmdb-api',
       configureServer(server) {
-        const token = loadEnv(mode, process.cwd(), 'TMDB_').TMDB_API_TOKEN;
         server.middlewares.use(async (req, res, next) => {
           if (!req.url?.startsWith('/api/tmdb/')) return next();
+          const env = loadEnv(mode, process.cwd(), '');
+          const token =
+            env.TMDB_API_TOKEN ||
+            env.VITE_TMDB_API_TOKEN ||
+            process.env.TMDB_API_TOKEN ||
+            process.env.VITE_TMDB_API_TOKEN ||
+            '';
           const request = new Request(new URL(req.url, 'http://localhost'), { method: req.method });
           const response = await handleTmdb(request, { token });
           res.writeHead(response.status, Object.fromEntries(response.headers));
